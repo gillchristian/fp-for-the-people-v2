@@ -1,0 +1,23 @@
+{
+  "scripts": {
+    "fix": "cp fix.js node_modules/mdx-deck/index.js",
+    "start": "mdx-deck deck.mdx",
+    "pdf": "mdx-deck-export pdf deck.mdx",
+    "build": "mdx-deck build deck.mdx",
+    "format": "prettier --write '**/*.{js,md,json}'"
+  },
+  "dependencies": {
+    "@mdx-deck/export": "^2.4.0",
+    "fp-ts": "^2.0.0",
+    "mdx-deck": "^2.3.2",
+    "node-fetch": "^2.6.0",
+    "ramda": "^0.26.1",
+    "react-monaco-editor": "^0.26.2",
+    "react-syntax-highlighter": "^10.3.0",
+    "styled-components": "^4.3.2"
+  },
+  "devDependencies": {
+    "monaco-editor-webpack-plugin": "^1.7.0",
+    "prettier": "^1.17.1"
+  }
+}
