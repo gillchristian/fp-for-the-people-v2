@@ -39,7 +39,7 @@ export const light = {
         ...lightStyle['pre[class*="language-"]'],
         borderRadius: 0,
         padding: '.5em .75em',
-      }
+      },
     },
     languages: {
       typescript,
@@ -48,7 +48,7 @@ export const light = {
   },
 }
 
-export const themeKey = 'light'
-// export const themeKey = 'dark'
+// export const themeKey = 'light'
+export const themeKey = 'dark'
 
-export default themeKey === 'dark' ? dark : light
+export default (themeKey === 'dark' ? dark : light)

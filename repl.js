@@ -10,7 +10,7 @@ import * as snippets from './snippets'
 import * as solutions from './solutions'
 import {themeKey as theme} from './theme'
 
-const fontSize = 24
+const fontSize = 32
 
 const options = {
   selectOnLineNumbers: true,
@@ -27,7 +27,7 @@ const resultTheme = (theme) =>
 const styles = {
   result: (theme, height) => ({
     overflow: 'auto',
-    width: '50%',
+    width: '30%',
     margin: 0,
     padding: '0 20px',
     lineHeight: height || '32px',
@@ -212,7 +212,7 @@ const Repl = ({snippet, language, persist: shouldPersist, withCurry}) => {
         value={code}
         onChange={(code, _event) => persist(code)}
         options={options}
-        width="50%"
+        width="70%"
       />
       <pre style={styles.result(theme, height)}>
         {height
