@@ -1,7 +1,5 @@
 export const compose = `// (f ∘ g)(x) = f(g(x))
 
-const compose = () => {}
-
 const head = xs => xs[0]
 const reverse = xs => [...xs].reverse()
 
@@ -53,17 +51,11 @@ titlelize(arr)`
 export const curryWanted = `const add = (a) => (b) => a + b
 `
 
-export const curry1 = `const add = (a) => (b) => a + b
+export const curry1 = `const add = (a, b) => a + b
 
-const inc = add(1) // \\o/
+const inc = add(1)
 
-add(1)(2) // =/
-
-const sum = (a, b) => a + b
-
-const inc_ = (b) => sum(1, b) // =/
-
-sum(1, 2) // \\o/`
+add(1, 2) === inc(2)`
 
 export const splice = `const xs = [1,2,3,4,5]
 

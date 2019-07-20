@@ -50,17 +50,11 @@ const arr = ['Odessa', 'JS', 'Rocks']
 
 siteTitle(arr)`
 
-export const curryWanted = `const add = (a) => (b) => a + b
+export const curryWanted = `const add = (a, b) => a + b
 
-const inc = add(1) // \\o/
+const inc = add(1)
 
-add(1)(2) // =/
-
-const sum = (a, b) => a + b
-
-const inc_ = (b) => sum(1, b) // =/
-
-sum(1, 2) // \\o/`
+add(1, 2) === inc(2)`
 
 export const curry1 = `function curry (fn) {
   return (...args) =>
