@@ -17,6 +17,7 @@ const options = {
   autoIndent: true,
   autoSurround: true,
   fontSize,
+  minimap: { enabled: false },
 }
 
 const resultTheme = (theme) =>
@@ -27,9 +28,9 @@ const resultTheme = (theme) =>
 const styles = {
   result: (theme, height) => ({
     overflow: 'auto',
-    width: '30%',
+    width: '35%',
     margin: 0,
-    padding: '0 20px',
+    padding: '15px 20px 0',
     lineHeight: height || '32px',
     fontSize,
     ...resultTheme(theme),
@@ -77,7 +78,6 @@ const offset = (lines) =>
 
 const showResult = (lines) => (result) => (
   <span>
-    {offset(lines)}
     {'> '}
     {result}
   </span>
@@ -212,7 +212,7 @@ const Repl = ({snippet, language, persist: shouldPersist, withCurry}) => {
         value={code}
         onChange={(code, _event) => persist(code)}
         options={options}
-        width="70%"
+        width="65%"
       />
       <pre style={styles.result(theme, height)}>
         {height

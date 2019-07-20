@@ -123,9 +123,7 @@ functions are values
 function add(a, b) {
   return a + b
 }
-
 const sum = (x, y) => add(x, y)
-
 sum(1, 2) // 3
 ```
 
@@ -135,7 +133,6 @@ sum(1, 2) // 3
 
 ```js
 const sum = add
-
 sum(1, 2) // 3
 ```
 
@@ -223,20 +220,14 @@ mult(2)(2) // 4
   width="1130"
 />
 
-<Appear>
+<Reference href="https://xkcd.com/221/" reference="xkcd" />
 
-<div>
+---
 
 ```js
 Math.random() // 0.0814034364872233
 Math.random() // 0.6760995607735527
 ```
-
-</div>
-
-</Appear>
-
-<Reference href="https://xkcd.com/221/" reference="xkcd" />
 
 ---
 
@@ -337,23 +328,27 @@ const makeSaveUser = (Db) => Db.save
 
 ```js
 const makeSaveUser = (Db) => Db.save
-
 const db = connect(config)
-
-const saveUserToDB = makeSaveUser(db) // pure
-
-saveUserToDB(user) // impure
+// pure
+const saveUser = makeSaveUser(db)
+// impure
+saveUser(user)
 ```
 
 ---
 
 ```js
-// makeSaveUser :: Db -> User -> Promise User
 const saveUser = (Db) => Db.save
 
 // production
 const db = connect(config)
-const saveUserToDB = makeSaveUser(db)
+const saveUser = makeSaveUser(db)
+```
+
+---
+
+```js
+const saveUser = (Db) => Db.save
 
 // testing
 const mockDB = createTestDB({users: []})
@@ -458,6 +453,10 @@ function, producing another function of smaller arity.
 
 ---
 
+<Image src="./images/construction-worker-pipe.jpeg" />
+
+---
+
 <Repl snippet="compose3" persist withCurry />
 
 ---
@@ -466,11 +465,23 @@ function, producing another function of smaller arity.
 
 ---
 
-## Composition is fractal
+<WithBackground src="./images/fractal.jpg" color="white">
 
-<img src="./images/composition-fractal.png" />
+## Composition is Fractal
+
+<Reference
+  href="https://fsharpforfunandprofit.com/fppatterns/"
+  reference="Functional Programming Design Patterns"
+  author="Scott Wlaschin"
+/>
+
+</WithBackground>
+
+---
 
 `operation -> service -> use case -> app`
+
+<img src="./images/composition-fractal.png" />
 
 <Reference
   href="https://fsharpforfunandprofit.com/fppatterns/"
@@ -498,11 +509,11 @@ function, producing another function of smaller arity.
 
 ---
 
-<img src="https://i.imgur.com/35AwDgs.png" width="840" />
+<img src="./images/only-you.png" width="840" />
 
 ---
 
-<img src="https://i.imgur.com/kTksKob.gif" width="540" />
+<img src="./images/questions.gif" width="540" />
 
 ---
 

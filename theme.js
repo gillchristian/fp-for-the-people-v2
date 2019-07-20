@@ -16,7 +16,15 @@ export const dark = {
     link: '#fff',
   },
   prism: {
-    style: darkStyle,
+    style: {
+      ...darkStyle,
+      'pre[class*="language-"]': {
+        ...darkStyle['pre[class*="language-"]'],
+        padding: '.5em',
+        paddingBottom: 0,
+        margin: 0,
+      },
+    },
     languages: {
       typescript,
       javascript,
@@ -38,7 +46,9 @@ export const light = {
       'pre[class*="language-"]': {
         ...lightStyle['pre[class*="language-"]'],
         borderRadius: 0,
-        padding: '.5em .75em',
+        padding: '.5em',
+        paddingBottom: 0,
+        margin: 0,
       },
     },
     languages: {
