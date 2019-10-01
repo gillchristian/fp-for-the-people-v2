@@ -5,6 +5,7 @@ import highlight from '@mdx-deck/themes/syntax-highlighter-prism'
 import Repl from './repl'
 import Reference from './Reference'
 import WithBackground from './WithBackground'
+import * as snippets from './snippets'
 import theme from './theme'
 
 export const themes = [theme, highlight]
@@ -13,7 +14,7 @@ export const themes = [theme, highlight]
 
 ---
 
-<Image src ="./images/map-and-compass-people.jpeg" />
+<Image src="./images/map-and-compass-people.jpeg" />
 
 ---
 
@@ -143,7 +144,7 @@ sum(1, 2) // 3
 ---
 
 ```js
-[1, 2, 3].reduce((acc, i) => add(acc, i), 0)
+;[1, 2, 3].reduce((acc, i) => add(acc, i), 0)
 ```
 
 <Appear>
@@ -151,7 +152,7 @@ sum(1, 2) // 3
 <div>
 
 ```js
-[1, 2, 3].reduce(add, 0)
+;[1, 2, 3].reduce(add, 0)
 ```
 
 </div>
@@ -160,11 +161,7 @@ sum(1, 2) // 3
 
 ---
 
-<img
-  alt="first-class functions"
-  src="./images/pooh-v2-01.jpg"
-  width="960"
-/>
+<img alt="first-class functions" src="./images/pooh-v2-01.jpg" width="960" />
 
 ---
 
@@ -173,7 +170,7 @@ sum(1, 2) // 3
 ---
 
 ```js
-[1, 2, 3].reduce(add, 0)
+;[1, 2, 3].reduce(add, 0)
 ```
 
 ---
@@ -183,7 +180,7 @@ const mult = (a) => (b) => a * b
 const by2 = mult(2)
 
 typeof by2 // 'function'
-by2(2)     // 4
+by2(2) // 4
 mult(2)(2) // 4
 ```
 
@@ -215,10 +212,7 @@ mult(2)(2) // 4
 
 ---
 
-<img
-  src="./images/xkcd-random.png"
-  width="1130"
-/>
+<img src="./images/xkcd-random.png" width="1130" />
 
 <Reference href="https://xkcd.com/221/" reference="xkcd" />
 
@@ -260,11 +254,11 @@ Date.now() // 1562927443676
 
 ---
 
-<Repl snippet="splice" persist />
+<Repl snippet={snippets.splice} persist />
 
 ---
 
-<Repl snippet="slice" persist />
+<Repl snippet={snippets.slice} persist />
 
 ---
 
@@ -280,11 +274,7 @@ Date.now() // 1562927443676
 
 ---
 
-<img
-  alt="side effects"
-  src="./images/side-effects.jpg"
-  width="840"
-/>
+<img alt="side effects" src="./images/side-effects.jpg" width="840" />
 
 ---
 
@@ -301,7 +291,7 @@ Date.now() // 1562927443676
 ---
 
 ```js
-const saveUser =             (user) => Db.save(user)
+const saveUser = (user) => Db.save(user)
 ```
 
 <Appear>
@@ -407,7 +397,7 @@ Self-documenting
 
 ---
 
-<Repl snippet="curryWanted" persist />
+<Repl snippet={snippets.curryWanted} persist />
 
 ---
 
@@ -431,7 +421,7 @@ function, producing another function of smaller arity.
 
 ---
 
-<Repl snippet="curry1" persist />
+<Repl snippet={snippets.curry1} persist />
 
 ---
 
@@ -449,7 +439,7 @@ function, producing another function of smaller arity.
 
 ---
 
-<Repl snippet="compose" persist withCurry />
+<Repl snippet={snippets.compose} persist />
 
 ---
 
@@ -523,10 +513,14 @@ function, producing another function of smaller arity.
 
 <small>
 
-- [Professor Frisby's Mostly Adequate Guide to Functional Programming](https://github.com/MostlyAdequate/mostly-adequate-guide) <small>([Brian Lonsdorf](https://twitter.com/drboolean))</small>
-- [Functional Programming Design Patterns](https://fsharpforfunandprofit.com/fppatterns/) <small>([Scott Wlaschin](https://twitter.com/ScottWlaschin))</small>
-- [Pure UI](https://rauchg.com/2015/pure-ui) <small>([Guillermo Rauch](https://twitter.com/rauchg))</small>
-- [Hot Reloading with Time Travel](https://www.youtube.com/watch?v=xsSnOQynTHs) <small>([Dan Abramov](https://twitter.com/dan_abramov))</small>
+- [Professor Frisby's Mostly Adequate Guide to Functional Programming](https://github.com/MostlyAdequate/mostly-adequate-guide)
+  <small>([Brian Lonsdorf](https://twitter.com/drboolean))</small>
+- [Functional Programming Design Patterns](https://fsharpforfunandprofit.com/fppatterns/)
+  <small>([Scott Wlaschin](https://twitter.com/ScottWlaschin))</small>
+- [Pure UI](https://rauchg.com/2015/pure-ui)
+  <small>([Guillermo Rauch](https://twitter.com/rauchg))</small>
+- [Hot Reloading with Time Travel](https://www.youtube.com/watch?v=xsSnOQynTHs)
+  <small>([Dan Abramov](https://twitter.com/dan_abramov))</small>
 
 </small>
 

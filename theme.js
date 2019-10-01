@@ -58,7 +58,7 @@ export const light = {
   },
 }
 
-// export const themeKey = 'light'
-export const themeKey = 'dark'
+export const themeKey = 'light'
+// export const themeKey = 'dark'
 
 export default (themeKey === 'dark' ? dark : light)

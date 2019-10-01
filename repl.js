@@ -6,8 +6,6 @@ import * as Option from 'fp-ts/lib/Option'
 import {pipe} from 'fp-ts/lib/pipeable'
 import {flow, identity as I} from 'fp-ts/lib/function'
 
-import * as snippets from './snippets'
-import * as solutions from './solutions'
 import {themeKey as theme} from './theme'
 
 const fontSize = 32
@@ -17,7 +15,7 @@ const options = {
   autoIndent: true,
   autoSurround: true,
   fontSize,
-  minimap: { enabled: false },
+  minimap: {enabled: false},
 }
 
 const resultTheme = (theme) =>
@@ -73,20 +71,18 @@ const renderError = (e) =>
     </div>,
   )
 
-const offset = (lines) =>
-  new Array(lines - 1).fill(0).map((_, i) => <br key={i} />)
-
-const showResult = (lines) => (result) => (
+const showResult = (result) => (
   <span>
     {'> '}
     {result}
   </span>
 )
 
-const renderResult = ({lines, result}) =>
+// renderResult :: Result -> IO<React.Element>
+const renderResult = ({result}) =>
   pipe(
     result,
-    Option.map(showResult(lines)),
+    Option.map(showResult),
     Option.getOrElse(() => <React.Fragment />),
     IO.of,
   )
@@ -103,53 +99,55 @@ function curry(f) {
 }
 `
 
-// Result :: { lines: number, result: Option<string> }
+// Result :: { result: Option<string> }
 
 // We don't know what `eval` is going to do since we are arbitrarily
 // running JS code (it can do anything), so it has to be `IO`
-// evalIO :: Bool -> String -> IOEither<Error, Result>
-const evalIO = (withCurry) => (code) =>
+// evalIO :: String -> IOEither<Error, Result>
+const evalIO = (code) =>
   IOEither.tryCatch(
     () => ({
-      // find last not-comment & not-empty line
-      lines: withCurry ? lineCount(code) - lineCount(curry) : lineCount(code),
       result: Option.fromNullable(eval(code)),
     }),
     error,
   )
 
-// evalIO :: Result -> IOEither<Error, Result>
-const safeStringifyResult = ({lines, result}) =>
+// safeStringifyResult :: Result -> IOEither<Error, Result>
+const safeStringifyResult = ({result: mbResult}) =>
   IOEither.tryCatch(
     () => ({
-      lines,
       result: Option.map((result) =>
         typeof result === 'function'
           ? `[Function ${result.name}]`
           : JSON.stringify(result, null, 2)
               .split('\n')
               .join('\n  '),
-      )(result),
+      )(mbResult),
     }),
     error,
   )
 
-const curryfy = (withCurry) => (code) => (withCurry ? `${curry}${code}` : code)
+const withEnv = (mbEnv) => (code) =>
+  pipe(
+    mbEnv,
+    Option.map((env) => `${env};${code}`),
+    Option.getOrElse(() => code),
+  )
 
-// evalIO :: Bool -> String  -> IOEither<Error, Result>
-const evalCodeIO = (withCurry) => (code) =>
+// evalCodeIO :: Option<String> -> String  -> IOEither<Error, Result>
+const evalCodeIO = (mbEnv) => (code) =>
   pipe(
     code,
-    curryfy(withCurry),
-    evalIO(withCurry),
+    withEnv(mbEnv),
+    evalIO,
     IOEither.chain(safeStringifyResult),
   )
 
 const storageIO = {
-  // getItem :: String -> IO<Option<a>>
-  getItem: (key) => () => Option.fromNullable(localStorage.getItem(key)),
-  // setItem :: String -> a -> IO<()>
-  setItem: (key, value) => () => localStorage.setItem(key, value),
+  // get :: String -> IO<Option<a>>
+  get: (key) => () => Option.fromNullable(localStorage.getItem(key)),
+  // set :: String -> a -> IO<()>
+  set: (key, value) => () => localStorage.setItem(key, value),
 }
 
 // $ :: String -> IO<Option<DOMElement>>
@@ -164,17 +162,20 @@ const elemHeightOr = (or) =>
     Option.getOrElse(() => or),
   )
 
-const Repl = ({snippet, language, persist: shouldPersist, withCurry}) => {
+// Snippet :: {code: String, solution: String, env: String | null | undefined}
+
+const Repl = ({snippet, language, persist: shouldPersist}) => {
   const [height, setHeight] = useState()
   const [showBtn, setShowBtn] = useState(true)
   const [code, setCode] = useState(
     pipe(
-      storageIO.getItem(snippet),
-      IO.map(Option.fold(() => snippets[snippet] || '// ...', I)),
+      storageIO.get(snippet.name),
+      IO.map(Option.fold(() => snippet.code || '// ...', I)),
     ),
   )
   useEffect(
     pipe(
+      // TODO: use `ref` instead if the editor supports it
       $('.react-monaco-editor-container .view-line'),
       IO.map(elemHeightOr('32px')),
       IO.map(setHeight),
@@ -182,17 +183,19 @@ const Repl = ({snippet, language, persist: shouldPersist, withCurry}) => {
     [],
   )
   const persist = (value) => {
-    shouldPersist && storageIO.setItem(snippet, value)()
+    shouldPersist && storageIO.set(snippet.code, value)()
     setCode(value)
   }
   const loadSolution = () => {
-    persist(solutions[snippet])
+    persist(snippet.solution)
     setShowBtn(false)
   }
   const loadInitial = () => {
-    persist(snippets[snippet])
+    persist(snippet.code)
     setShowBtn(true)
   }
+
+  console.log(snippet)
 
   return (
     <div style={styles.container}>
@@ -218,7 +221,7 @@ const Repl = ({snippet, language, persist: shouldPersist, withCurry}) => {
         {height
           ? pipe(
               code,
-              evalCodeIO(withCurry),
+              evalCodeIO(Option.fromNullable(snippet.env)),
               IOEither.fold(renderError, renderResult),
             )()
           : null}
