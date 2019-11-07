@@ -1,5 +1,14 @@
 import * as solutions from './solutions'
 
+const env_curry = `
+function curry(f) {
+  return (...args) =>
+    args.length === f.length
+      ? f(...args)
+      : curry(f.bind(null, ...args))
+}
+`
+
 const compose_code = `// (f ∘ g)(x) = f(g(x))
 
 const head = xs => xs[0]
@@ -11,9 +20,13 @@ const arr = ['Odessa', 'JS', 'Rocks']
 
 last(arr)`
 
-export const compose = {code: compose_code}
+export const compose = {
+  name: 'compose',
+  code: compose_code,
+  solution: solutions.compose,
+}
 
-export const compose3 = `const compose = (f, g) => (x) => f(g(x))
+const compose3_code = `const compose = (f, g) => (x) => f(g(x))
 
 const join = curry((delim, xs) => xs.join(delim))
 const toUpper = (str) => str.toUpperCase()
@@ -31,7 +44,14 @@ const arr = ['Odessa', 'JS', 'Rocks']
 
 siteTitle(arr)`
 
-export const composeN = `const compose = (f, g) => (x) => f(g(x))
+export const compose3 = {
+  name: 'compose3',
+  code: compose3_code,
+  solution: solutions.compose3,
+  env: env_curry,
+}
+
+const composeN_code = `const compose = (f, g) => (x) => f(g(x))
 const compose3 = (f, g, h) => (x) => f(g(h(x)))
 
 const join = curry((delim, xs) => xs.join(delim))
@@ -51,6 +71,13 @@ const titlelize = compose3(
 const arr = ['Odessa', 'JS', 'Rocks']
 
 titlelize(arr)`
+
+export const composeN = {
+  name: 'curryWanted',
+  code: composeN_code,
+  solution: solutions.composeN,
+  env: env_curry,
+}
 
 const curryWanted_code = `const add = (a) => (b) => a + b
 `

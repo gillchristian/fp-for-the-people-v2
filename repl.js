@@ -90,15 +90,6 @@ const renderResult = ({result}) =>
 // error :: Error | any -> Error
 const error = (e) => (e instanceof Error ? e : new Error('unknown error'))
 
-const curry = `
-function curry(f) {
-  return (...args) =>
-    args.length === f.length
-      ? f(...args)
-      : curry(f.bind(null, ...args))
-}
-`
-
 // Result :: { result: Option<string> }
 
 // We don't know what `eval` is going to do since we are arbitrarily
@@ -194,8 +185,6 @@ const Repl = ({snippet, language, persist: shouldPersist}) => {
     persist(snippet.code)
     setShowBtn(true)
   }
-
-  console.log(snippet)
 
   return (
     <div style={styles.container}>
