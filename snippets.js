@@ -16,7 +16,9 @@ const reverse = xs => [...xs].reverse()
 
 const last = xs => head(reverse(xs))
 
-const arr = ['Odessa', 'JS', 'Rocks']
+const arr = [
+  'Find', 'the', 'object', 'you', 'want',
+]
 
 last(arr)`
 
@@ -40,7 +42,9 @@ const siteTitle = compose(
   join(' '),
 )
 
-const arr = ['Odessa', 'JS', 'Rocks']
+const arr = [
+  'Find', 'the', 'object', 'you', 'want',
+]
 
 siteTitle(arr)`
 
@@ -68,7 +72,9 @@ const titlelize = compose3(
   join(' '),
 )
 
-const arr = ['Odessa', 'JS', 'Rocks']
+const arr = [
+  'Find', 'the', 'object', 'you', 'want',
+]
 
 titlelize(arr)`
 
