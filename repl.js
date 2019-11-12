@@ -135,9 +135,15 @@ const evalCodeIO = (mbEnv) => (code) =>
 
 const storageIO = {
   // get :: String -> IO<Option<a>>
-  get: (key) => () => Option.fromNullable(localStorage.getItem(key)),
+  get: (key) => () =>
+    typeof localStorage !== 'undefined'
+      ? Option.fromNullable(localStorage.getItem(key))
+      : Option.none,
   // set :: String -> a -> IO<()>
-  set: (key, value) => () => localStorage.setItem(key, value),
+  set: (key, value) => () =>
+    typeof localStorage !== 'undefined'
+      ? localStorage.setItem(key, value)
+      : undefined,
 }
 
 // $ :: String -> IO<Option<DOMElement>>
