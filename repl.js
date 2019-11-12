@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
-import MonacoEditor from 'react-monaco-editor'
 import * as IOEither from 'fp-ts/lib/IOEither'
 import * as IO from 'fp-ts/lib/IO'
 import * as Option from 'fp-ts/lib/Option'
 import {pipe} from 'fp-ts/lib/pipeable'
 import {flow, identity as I} from 'fp-ts/lib/function'
+import MonacoEditor from '@monaco-editor/react'
 
 import {themeKey as theme} from './theme'
 
@@ -24,12 +24,12 @@ const resultTheme = (theme) =>
     : {backgroundColor: '#1e1e1e', color: '#d4d4d4'}
 
 const styles = {
-  result: (theme, height) => ({
+  result: (theme, lineHeight) => ({
     overflow: 'auto',
     width: '35%',
     margin: 0,
     padding: '15px 20px 0',
-    lineHeight: height || '32px',
+    lineHeight: lineHeight || '32px',
     fontSize,
     ...resultTheme(theme),
   }),
@@ -60,8 +60,6 @@ const styles = {
     display: 'flex',
   },
 }
-
-const lineCount = (str) => str.trim().split('\n').length
 
 const renderError = (e) =>
   IO.of(
@@ -98,6 +96,7 @@ const error = (e) => (e instanceof Error ? e : new Error('unknown error'))
 const evalIO = (code) =>
   IOEither.tryCatch(
     () => ({
+      // eslint-disable-next-line no-eval
       result: Option.fromNullable(eval(code)),
     }),
     error,
@@ -155,8 +154,8 @@ const elemHeightOr = (or) =>
 
 // Snippet :: {code: String, solution: String, env: String | null | undefined}
 
-const Repl = ({snippet, language, persist: shouldPersist}) => {
-  const [height, setHeight] = useState()
+const Repl = ({snippet, persist: shouldPersist}) => {
+  const [lineHeight, setLineHeight] = useState()
   const [showBtn, setShowBtn] = useState(true)
   const [code, setCode] = useState(
     pipe(
@@ -169,12 +168,13 @@ const Repl = ({snippet, language, persist: shouldPersist}) => {
       // TODO: use `ref` instead if the editor supports it
       $('.react-monaco-editor-container .view-line'),
       IO.map(elemHeightOr('32px')),
-      IO.map(setHeight),
+      IO.map(setLineHeight),
     ),
     [],
   )
+
   const persist = (value) => {
-    shouldPersist && storageIO.set(snippet.code, value)()
+    shouldPersist && storageIO.set(snippet.name, value)()
     setCode(value)
   }
   const loadSolution = () => {
@@ -198,16 +198,17 @@ const Repl = ({snippet, language, persist: shouldPersist}) => {
           Load initial
         </button>
       </div>
+      <div id="editor" />
       <MonacoEditor
         theme={theme === 'light' ? 'vs-light' : 'vs-dark'}
-        language={language || 'javascript'}
+        language={'javascript'}
         value={code}
         onChange={(code, _event) => persist(code)}
         options={options}
         width="65%"
       />
-      <pre style={styles.result(theme, height)}>
-        {height
+      <pre style={styles.result(theme, lineHeight)}>
+        {lineHeight
           ? pipe(
               code,
               evalCodeIO(Option.fromNullable(snippet.env)),

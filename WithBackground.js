@@ -1,8 +1,4 @@
-import React from 'react'
 import styled from 'styled-components'
-// TODO: `@mdx-deck/components` module issue while with webpack loader
-// import { useTheme } from '@mdx-deck/components'
-import * as R from 'ramda'
 
 const WithBackground = styled.div`
   background-image: url("${props => props.src}");

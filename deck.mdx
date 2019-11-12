@@ -1,5 +1,4 @@
-import {Notes, Appear, Image} from 'mdx-deck'
-import {Split, FullScreenCode} from 'mdx-deck/layouts'
+import {Notes, Appear, Image, Split, FullScreenCode} from 'mdx-deck'
 import highlight from '@mdx-deck/themes/syntax-highlighter-prism'
 
 import Repl from './repl'
@@ -10,6 +9,34 @@ import * as snippets from './snippets'
 import theme from './theme'
 
 export const themes = [theme, highlight]
+
+import mapAndCompass from './images/map-and-compass-people.jpeg'
+import what from './images/what.gif'
+import comeOn from './images/come-on.gif'
+import crossRoadSign from './images/cross-road-sign.jpeg'
+import toThePeople from './images/to-you-the-people.webp'
+import cool from './images/cool.jpg'
+import goal from './images/goal.jpeg'
+import functionsEverywhere from './images/functions-everywhere.jpeg'
+import functionsEverywhereHappy from './images/functions-everywhere-happy.jpg'
+import pooh01 from './images/pooh-v2-01.jpg'
+import pooh02 from './images/pooh-v2-02.jpg'
+import pure from './images/pure.jpeg'
+import xkcdRandom from './images/xkcd-random.png'
+import wallet from './images/wallet.jpeg'
+import gorillaThinking from './images/gorilla-thinking.jpg'
+import factoryWorkerSaw from './images/factory-wroker-saw.jpeg'
+import sideEffects from './images/side-effects.jpg'
+import pooh03 from './images/pooh-v2-03.jpg'
+import imgCurry from './images/curry.jpeg'
+import wallStones from './images/wall-stones.jpeg'
+import constructionWorkerPipe from './images/construction-worker-pipe.jpeg'
+import fractal from './images/fractal.jpg'
+import compositionIsFractal from './images/composition-fractal.png'
+import compassAndForest from './images/compass-and-forest.jpeg'
+import neverStopExploring from './images/never-stop-exploring.jpeg'
+import onlyYou from './images/only-you.png'
+import imgQuestions from './images/questions.gif'
 
 # Functional Programming
 
@@ -23,7 +50,7 @@ Christian Gill @ Catawiki
 
 ---
 
-<Image src="./images/map-and-compass-people.jpeg" />
+<Image src={mapAndCompass} />
 
 ---
 
@@ -43,19 +70,19 @@ in the category of **endofunctors** of X.
 
 ---
 
-<Image src="./images/what.gif" />
+<Image src={what} />
 
 ---
 
-<Image src="./images/come-on.gif" />
+<Image src={comeOn} />
 
 ---
 
-<Image src="./images/cross-road-sign.jpeg" />
+<Image src={crossRoadSign} />
 
 ---
 
-<img src="./images/to-you-the-people.webp" width="840" />
+<img src={toThePeople} width="840" />
 
 ---
 
@@ -65,11 +92,11 @@ in the category of **endofunctors** of X.
 
 ---
 
-<Image src="./images/cool.jpg" />
+<Image src={cool} />
 
 ---
 
-<Image src="./images/goal.jpeg" />
+<Image src={goal} />
 
 ---
 
@@ -105,7 +132,7 @@ represent problems in terms of generic, composable bits
 
 <img
   alt="funtions, functions everywhere"
-  src="./images/functions-everywhere.jpeg"
+  src={functionsEverywhere}
   width="960"
 />
 
@@ -113,7 +140,7 @@ represent problems in terms of generic, composable bits
 
 <img
   alt="funtions, functions everywhere"
-  src="./images/functions-everywhere-happy.jpg"
+  src={functionsEverywhereHappy}
   width="960"
 />
 
@@ -170,7 +197,7 @@ sum(1, 2) // 3
 
 ---
 
-<img alt="first-class functions" src="./images/pooh-v2-01.jpg" width="960" />
+<img alt="first-class functions" src={pooh01} width="960" />
 
 ---
 
@@ -197,13 +224,13 @@ mult(2)(2) // 4
 
 <img
   alt="first-class higer-order functions"
-  src="./images/pooh-v2-02.jpg"
+  src={pooh02}
   width="840"
 />
 
 ---
 
-<WithBackground src="./images/pure.jpeg" color="#2d2d2d">
+<WithBackground src={pure} color="#2d2d2d">
 
 ## Pure functions
 
@@ -221,7 +248,7 @@ mult(2)(2) // 4
 
 ---
 
-<img src="./images/xkcd-random.png" width="1130" />
+<img src={xkcdRandom} width="1130" />
 
 <Reference href="https://xkcd.com/221/" reference="xkcd" />
 
@@ -251,7 +278,7 @@ Date.now() // 1562927443676
 
 ---
 
-<Image src="./images/wallet.jpeg" />
+<Image src={wallet} />
 
 ---
 
@@ -259,7 +286,7 @@ Date.now() // 1562927443676
 
 ---
 
-<Image src="./images/gorilla-thinking.jpg" />
+<Image src={gorillaThinking} />
 
 ---
 
@@ -275,7 +302,7 @@ Date.now() // 1562927443676
 
 ---
 
-<WithBackground src="./images/factory-wroker-saw.jpeg" color="white">
+<WithBackground src={factoryWorkerSaw} color="white">
 
 ## What about I/O ?!
 
@@ -283,7 +310,7 @@ Date.now() // 1562927443676
 
 ---
 
-<img alt="side effects" src="./images/side-effects.jpg" width="840" />
+<img alt="side effects" src={sideEffects} width="840" />
 
 ---
 
@@ -400,7 +427,7 @@ Self-documenting
 
 <img
   alt="first-class higher-order pure functions"
-  src="./images/pooh-v2-03.jpg"
+  src={pooh03}
   width="760"
 />
 
@@ -410,7 +437,7 @@ Self-documenting
 
 ---
 
-<WithBackground src="./images/curry.jpeg" color="white">
+<WithBackground src={imgCurry} color="white">
 
 ## Currying & Partial Application
 
@@ -434,7 +461,7 @@ function, producing another function of smaller arity.
 
 ---
 
-<WithBackground src="./images/wall-stones.jpeg" color="black">
+<WithBackground src={wallStones} color="black">
 
 <Appear>
 
@@ -452,7 +479,7 @@ function, producing another function of smaller arity.
 
 ---
 
-<Image src="./images/construction-worker-pipe.jpeg" />
+<Image src={constructionWorkerPipe} />
 
 ---
 
@@ -464,7 +491,7 @@ function, producing another function of smaller arity.
 
 ---
 
-<WithBackground src="./images/fractal.jpg" color="white">
+<WithBackground src={fractal} color="white">
 
 ## Composition is Fractal
 
@@ -480,7 +507,7 @@ function, producing another function of smaller arity.
 
 `operation -> service -> use case -> app`
 
-<img src="./images/composition-fractal.png" />
+<img src={compositionIsFractal} />
 
 <Reference
   href="https://fsharpforfunandprofit.com/fppatterns/"
@@ -490,7 +517,7 @@ function, producing another function of smaller arity.
 
 ---
 
-<WithBackground src="./images/compass-and-forest.jpeg" color="white">
+<WithBackground src={compassAndForest} color="white">
 
 <div>
 
@@ -504,15 +531,15 @@ function, producing another function of smaller arity.
 
 ---
 
-<Image src="./images/never-stop-exploring.jpeg" />
+<Image src={neverStopExploring} />
 
 ---
 
-<img src="./images/only-you.png" width="840" />
+<img src={onlyYou} width="840" />
 
 ---
 
-<img src="./images/questions.gif" width="540" />
+<img src={imgQuestions} width="540" />
 
 @<a href="https://twitter.com/gillchristian" target="_blank">gillchristian</a>
 

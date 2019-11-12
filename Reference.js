@@ -13,7 +13,7 @@ const Styled = styled.div`
 const Reference = ({ href, reference, author }) => 
   <Styled>
     <i>
-      <a href={href} target="_blank">{reference}</a>
+      <a href={href} target="_blank" rel="noopener noreferrer">{reference}</a>
     </i>{reference && author ? ', ' : ''}{author}
   </Styled>
 
