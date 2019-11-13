@@ -1,5 +1,4 @@
-// import {dark as darkTheme, aspect as lightTheme} from 'mdx-deck/themes'
-import {dark as darkTheme} from 'mdx-deck/themes'
+import {dark as darkTheme, aspect as lightTheme} from 'mdx-deck/themes'
 
 import lightStyle from 'react-syntax-highlighter/dist/esm/styles/prism/solarizedlight'
 import darkStyle from 'react-syntax-highlighter/dist/esm/styles/prism/tomorrow'
@@ -34,7 +33,7 @@ export const dark = {
 }
 
 export const light = {
-  // ...lightTheme,
+  ...lightTheme,
   colors: {
     color: '#2d2d2d',
     background: 'rgb(253, 246, 227)',
@@ -63,4 +62,4 @@ export const light = {
 export const themeKey = 'light'
 // export const themeKey = 'dark'
 
-export default (themeKey === 'dark' ? dark : light)
+export default themeKey === 'dark' ? dark : light

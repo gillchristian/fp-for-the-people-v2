@@ -4,11 +4,12 @@ import * as IO from 'fp-ts/lib/IO'
 import * as Option from 'fp-ts/lib/Option'
 import {pipe} from 'fp-ts/lib/pipeable'
 import {flow, identity as I} from 'fp-ts/lib/function'
-import MonacoEditor from '@monaco-editor/react'
+import {ControlledEditor as MonacoEditor} from '@monaco-editor/react'
 
 import {themeKey as theme} from './theme'
 
-const fontSize = 32
+const fontSize = 24
+const px = (n) => (px ? `${n}px` : 0)
 
 const options = {
   selectOnLineNumbers: true,
@@ -26,19 +27,21 @@ const resultTheme = (theme) =>
 const styles = {
   result: (theme, lineHeight) => ({
     overflow: 'auto',
-    width: '35%',
+    width: '100%',
+    height: '20vh',
     margin: 0,
     padding: '15px 20px 0',
-    lineHeight: lineHeight || '32px',
+    lineHeight: lineHeight || px(fontSize),
     fontSize,
+    borderTop: '2px solid gray',
     ...resultTheme(theme),
   }),
   container: {
     width: '100vw',
     height: '100vh',
     display: 'flex',
+    flexDirection: 'column',
     textAlign: 'left',
-    padding: '3%',
   },
   err: {
     color: 'red',
@@ -55,7 +58,7 @@ const styles = {
   }),
   controls: {
     position: 'fixed',
-    top: 10,
+    bottom: 10,
     right: 10,
     display: 'flex',
   },
@@ -109,9 +112,7 @@ const safeStringifyResult = ({result: mbResult}) =>
       result: Option.map((result) =>
         typeof result === 'function'
           ? `[Function ${result.name}]`
-          : JSON.stringify(result, null, 2)
-              .split('\n')
-              .join('\n  '),
+          : JSON.stringify(result),
       )(mbResult),
     }),
     error,
@@ -173,7 +174,7 @@ const Repl = ({snippet, persist: shouldPersist}) => {
     pipe(
       // TODO: use `ref` instead if the editor supports it
       $('.react-monaco-editor-container .view-line'),
-      IO.map(elemHeightOr('32px')),
+      IO.map(elemHeightOr(px(fontSize))),
       IO.map(setLineHeight),
     ),
     [],
@@ -193,7 +194,7 @@ const Repl = ({snippet, persist: shouldPersist}) => {
   }
 
   return (
-    <div style={styles.container}>
+    <>
       <div style={styles.controls}>
         {showBtn && (
           <button onClick={loadSolution} style={styles.btn(theme)}>
@@ -204,25 +205,30 @@ const Repl = ({snippet, persist: shouldPersist}) => {
           Load initial
         </button>
       </div>
-      <div id="editor" />
-      <MonacoEditor
-        theme={theme === 'light' ? 'vs-light' : 'vs-dark'}
-        language={'javascript'}
-        value={code}
-        onChange={(code, _event) => persist(code)}
-        options={options}
-        width="65%"
-      />
-      <pre style={styles.result(theme, lineHeight)}>
-        {lineHeight
-          ? pipe(
-              code,
-              evalCodeIO(Option.fromNullable(snippet.env)),
-              IOEither.fold(renderError, renderResult),
-            )()
-          : null}
-      </pre>
-    </div>
+      <div style={styles.container}>
+        <MonacoEditor
+          theme={theme === 'light' ? 'vs-light' : 'vs-dark'}
+          language={'javascript'}
+          value={code}
+          onChange={(event, code = '') => {
+            persist(code)
+            return code
+          }}
+          options={options}
+          width="100%"
+          height="80vh"
+        />
+        <pre style={styles.result(theme, lineHeight)}>
+          {lineHeight
+            ? pipe(
+                code,
+                evalCodeIO(Option.fromNullable(snippet.env)),
+                IOEither.fold(renderError, renderResult),
+              )()
+            : null}
+        </pre>
+      </div>
+    </>
   )
 }
 

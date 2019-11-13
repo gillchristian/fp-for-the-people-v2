@@ -1,8 +1,10 @@
-import {Notes, Appear, Image, Split, FullScreenCode} from 'mdx-deck'
+import {Notes, Appear, Image} from 'mdx-deck'
 import highlight from '@mdx-deck/themes/syntax-highlighter-prism'
 
 import Repl from './repl'
+import Me from './Me'
 import Reference from './Reference'
+import Code from './Code'
 import References from './references'
 import WithBackground from './WithBackground'
 import * as snippets from './snippets'
@@ -29,7 +31,7 @@ import factoryWorkerSaw from './images/factory-wroker-saw.jpeg'
 import sideEffects from './images/side-effects.jpg'
 import pooh03 from './images/pooh-v2-03.jpg'
 import imgCurry from './images/curry.jpeg'
-import wallStones from './images/wall-stones.jpeg'
+import bricks from './images/bricks.jpg'
 import constructionWorkerPipe from './images/construction-worker-pipe.jpeg'
 import fractal from './images/fractal.jpg'
 import compositionIsFractal from './images/composition-fractal.png'
@@ -38,15 +40,11 @@ import neverStopExploring from './images/never-stop-exploring.jpeg'
 import onlyYou from './images/only-you.png'
 import imgQuestions from './images/questions.gif'
 
-# Functional Programming
+<h1 style={{ marginBottom: 0 }}>Functional Programming</h1>
 
-# for the People
+<h1 style={{ marginTop: 30 }}>for the People</h1>
 
-<small>
-
-Christian Gill @ Catawiki
-
-</small>
+<Me />
 
 ---
 
@@ -58,9 +56,9 @@ Christian Gill @ Catawiki
 
 ---
 
-A **monad** in X is just a **monoid**
+A **monad** in X is just a **monoid** in
 
-in the category of **endofunctors** of X.
+the category of **endofunctors** of X.
 
 <Reference
   author="Saunders Mac Lane"
@@ -82,7 +80,7 @@ in the category of **endofunctors** of X.
 
 ---
 
-<img src={toThePeople} width="840" />
+<img src={toThePeople} width="640" />
 
 ---
 
@@ -156,6 +154,8 @@ functions are values
 
 ---
 
+<Code>
+
 ```js
 function add(a, b) {
   return a + b
@@ -177,10 +177,15 @@ sum(1, 2) // 3
 
 </Appear>
 
+</Code>
+
 ---
 
+<Code>
+
 ```js
-;[1, 2, 3].reduce((acc, i) => add(acc, i), 0)
+[1, 2, 3]
+  .reduce((acc, i) => add(acc, i), 0)
 ```
 
 <Appear>
@@ -188,16 +193,19 @@ sum(1, 2) // 3
 <div>
 
 ```js
-;[1, 2, 3].reduce(add, 0)
+[1, 2, 3]
+  .reduce(add, 0)
 ```
 
 </div>
 
 </Appear>
 
+</Code>
+
 ---
 
-<img alt="first-class functions" src={pooh01} width="960" />
+<img alt="first-class functions" src={pooh01} width="640" />
 
 ---
 
@@ -205,27 +213,36 @@ sum(1, 2) // 3
 
 ---
 
+<Code>
+
 ```js
-;[1, 2, 3].reduce(add, 0)
+[1, 2, 3]
+  .reduce(add, 0)
 ```
 
+</Code>
+
 ---
+
+<Code>
 
 ```js
 const mult = (a) => (b) => a * b
 const by2 = mult(2)
 
 typeof by2 // 'function'
-by2(2) // 4
+by2(2)     // 4
 mult(2)(2) // 4
 ```
+
+</Code>
 
 ---
 
 <img
   alt="first-class higer-order functions"
   src={pooh02}
-  width="840"
+  width="580"
 />
 
 ---
@@ -254,17 +271,25 @@ mult(2)(2) // 4
 
 ---
 
+<Code>
+
 ```js
 Math.random() // 0.0814034364872233
 Math.random() // 0.6760995607735527
 ```
 
+</Code>
+
 ---
+
+<Code>
 
 ```js
 Date.now() // 1560981656763
 Date.now() // 1562927443676
 ```
+
+</Code>
 
 ---
 
@@ -310,7 +335,7 @@ Date.now() // 1562927443676
 
 ---
 
-<img alt="side effects" src={sideEffects} width="840" />
+<img alt="side effects" src={sideEffects} width="640" />
 
 ---
 
@@ -326,6 +351,8 @@ Date.now() // 1562927443676
 
 ---
 
+<Code>
+
 ```js
 const saveUser = (user) => Db.save(user)
 ```
@@ -335,25 +362,24 @@ const saveUser = (user) => Db.save(user)
 <div>
 
 ```js
-const makeSaveUser = (Db) => (user) => Db.save(user)
-```
-
-</div>
-
-<div>
-
-```js
-const makeSaveUser = (Db) => Db.save
+const makeSaveUser =
+  (Db) => (user) => Db.save(user)
 ```
 
 </div>
 
 </Appear>
 
+</Code>
+
 ---
 
+<Code>
+
 ```js
-const makeSaveUser = (Db) => Db.save
+const makeSaveUser =
+  (Db) => (user) => Db.save(user)
+
 const db = connect(config)
 // pure
 const saveUser = makeSaveUser(db)
@@ -361,35 +387,47 @@ const saveUser = makeSaveUser(db)
 saveUser(user)
 ```
 
+</Code>
+
 ---
 
+<Code>
+
 ```js
-const saveUser = (Db) => Db.save
+const makeSaveUser =
+  (Db) => (user) => Db.save(user)
 
 // production
 const db = connect(config)
 const saveUser = makeSaveUser(db)
 ```
 
+</Code>
+
 ---
 
+<Code>
+
 ```js
-const saveUser = (Db) => Db.save
+const makeSaveUser =
+  (Db) => (user) => Db.save(user)
 
 // testing
-const mockDB = createTestDB({users: []})
+const mockDB = createTestDB()
 const saveUserTest = makeSaveUser(mockDB)
 ```
 
+</Code>
+
 ---
 
-Cache
+- Cache
 
-Parallel
+- Parallel
 
-Portable
+- Portable
 
-Self-documenting
+- Self-documenting
 
 ---
 
@@ -428,7 +466,7 @@ Self-documenting
 <img
   alt="first-class higher-order pure functions"
   src={pooh03}
-  width="760"
+  width="520"
 />
 
 ---
@@ -461,15 +499,15 @@ function, producing another function of smaller arity.
 
 ---
 
-<WithBackground src={wallStones} color="black">
+<WithBackground src={bricks} color="black">
 
 <Appear>
 
-<h2 style={{ margin: 0, marginBottom: -20 }}>Composition</h2>
+## Composition
 
 </Appear>
 
-<h3 style={{ margin: 0, marginTop: -20 }}>(f ∘ g)(x) = f(g(x))</h3>
+## `(f ∘ g)(x) = f(g(x))`
 
 </WithBackground>
 
@@ -507,7 +545,7 @@ function, producing another function of smaller arity.
 
 `operation -> service -> use case -> app`
 
-<img src={compositionIsFractal} />
+<img src={compositionIsFractal} width="720"/>
 
 <Reference
   href="https://fsharpforfunandprofit.com/fppatterns/"
@@ -535,13 +573,11 @@ function, producing another function of smaller arity.
 
 ---
 
-<img src={onlyYou} width="840" />
+<img src={imgQuestions} width="480" />
 
 ---
 
-<img src={imgQuestions} width="540" />
-
-@<a href="https://twitter.com/gillchristian" target="_blank">gillchristian</a>
+\#functional 💬
 
 ---
 

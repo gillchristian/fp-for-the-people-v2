@@ -12,6 +12,8 @@ const WithBackground = styled.div`
   flex-direction: column;
   justify-content: center;
 
+  text-align: center;
+
   color: ${props => props.color};
 `
 
