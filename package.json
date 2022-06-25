@@ -11,7 +11,7 @@
     "fp-ts": "^2.1.1",
     "mdx-deck": "^3.0.13",
     "monaco-editor": "^0.18.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "ramda": "^0.26.1",
     "react-syntax-highlighter": "^11.0.2",
     "styled-components": "^4.4.1"
